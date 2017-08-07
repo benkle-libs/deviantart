@@ -1,0 +1,23 @@
+{
+  "name": "benkle/deviantart",
+  "description": "A small library to access content from deviantart",
+  "minimum-stability": "dev",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Benjamin Kleiner",
+      "email": "bizzl@users.sourceforge.net"
+    }
+  ],
+  "require": {
+    "seinopsys/oauth2-deviantart": "~1.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "~6.3"
+  },
+  "autoload": {
+    "psr-4": {
+      "Benkle\\Deviantart\\": "src"
+    }
+  }
+}
