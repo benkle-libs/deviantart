@@ -73,7 +73,8 @@ class Gallery extends Endpoints
     /**
      *  Fetch gallery folders.
      *
-     * You can preload up to 5 deviations from each folder by passing ext_preload parameter. It is mainly useful to reduce number of requests to API.
+     * You can preload up to 5 deviations from each folder by passing ext_preload parameter.
+     * It is mainly useful to reduce number of requests to API.
      *
      * @param string|null $username
      * @param bool|null $calculateSize
