@@ -28,6 +28,7 @@
 namespace Benkle\Deviantart;
 
 
+use Benkle\Deviantart\Endpoints\Deviation;
 use Benkle\Deviantart\Endpoints\Gallery;
 use Benkle\Deviantart\Exceptions\UnauthorizedException;
 use League\OAuth2\Client\Provider\AbstractProvider;
@@ -63,8 +64,12 @@ class Api
     /** @var  Gallery */
     private $gallery;
 
+    /** @var  Deviation */
+    private $deviation;
+
     /**
      * Api constructor.
+     *
      * @param AbstractProvider $provider
      * @param AccessToken|null $accessToken
      */
@@ -74,10 +79,12 @@ class Api
         $this->accessToken = $accessToken;
 
         $this->gallery = new Gallery($this);
+        $this->deviation = new Deviation($this);
     }
 
     /**
      * Get the OAuth2 provider.
+     *
      * @return AbstractProvider
      */
     public function getProvider(): AbstractProvider
@@ -87,6 +94,7 @@ class Api
 
     /**
      * Get the access token.
+     *
      * @return AccessToken
      */
     public function getAccessToken(): AccessToken
@@ -96,11 +104,22 @@ class Api
 
     /**
      * Get the gallery endpoints.
+     *
      * @return Gallery
      */
     public function gallery(): Gallery
     {
         return $this->gallery;
+    }
+
+    /**
+     * Get the deviation endpoints.
+     *
+     * @return Deviation
+     */
+    public function deviation(): Deviation
+    {
+        return $this->deviation;
     }
 
     /**
