@@ -29,6 +29,7 @@ namespace Benkle\Deviantart;
 
 
 use Benkle\Deviantart\Endpoints\Deviation;
+use Benkle\Deviantart\Endpoints\Feed;
 use Benkle\Deviantart\Endpoints\Gallery;
 use Benkle\Deviantart\Exceptions\UnauthorizedException;
 use League\OAuth2\Client\Provider\AbstractProvider;
@@ -67,6 +68,9 @@ class Api
     /** @var  Deviation */
     private $deviation;
 
+    /** @var  Feed */
+    private $feed;
+
     /** @var  ApiRequest */
     private $requestPrototype;
 
@@ -81,10 +85,38 @@ class Api
         $this->provider = $provider;
         $this->accessToken = $accessToken;
 
-        $this->requestPrototype = new ApiRequest($provider, $accessToken);
+        if ($accessToken) {
+            $this->refreshRequestPrototype();
+        }
 
         $this->gallery = new Gallery($this);
         $this->deviation = new Deviation($this);
+        $this->feed = new Feed($this);
+    }
+
+    private function refreshRequestPrototype()
+    {
+        $this->requestPrototype = new ApiRequest($this->provider, $this->accessToken);
+    }
+
+    /**
+     * Get the OAuth2 provider.
+     *
+     * @return AbstractProvider
+     */
+    public function getProvider(): AbstractProvider
+    {
+        return $this->provider;
+    }
+
+    /**
+     * Get the access token.
+     *
+     * @return AccessToken
+     */
+    public function getAccessToken(): AccessToken
+    {
+        return $this->accessToken;
     }
 
     /**
@@ -118,6 +150,16 @@ class Api
     }
 
     /**
+     * Get the feed endpoints.
+     *
+     * @return Feed
+     */
+    public function feed(): Feed
+    {
+        return $this->feed;
+    }
+
+    /**
      * Refresh access token.
      */
     public function refreshToken()
@@ -127,6 +169,7 @@ class Api
                                'refresh_token' => $this->accessToken->getRefreshToken(),
                            ]
         );
+        $this->refreshRequestPrototype();
     }
 
     /**
@@ -146,6 +189,7 @@ class Api
                 'authorization_code',
                 ['code' => $authCode, 'scope' => $scopes,]
             );
+            $this->refreshRequestPrototype();
         } elseif (!isset($this->accessToken)) {
             throw new UnauthorizedException($this->provider->getAuthorizationUrl(['scope' => $scopes]));
         } elseif ($this->accessToken->hasExpired()) {
