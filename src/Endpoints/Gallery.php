@@ -58,7 +58,7 @@ class Gallery extends Endpoints
         bool $includeMature = null
     ): \stdClass
     {
-        $request = new ApiRequest($this->api->getProvider(), $this->api->getAccessToken());
+        $request = $this->api->newRequest();
         $request
             ->setUrl(Api::URL . '/gallery/' . ($folderId ?? ''))
             ->setParameter('username', $username)
@@ -93,7 +93,7 @@ class Gallery extends Endpoints
         bool $includeMature = null
     ): \stdClass
     {
-        $request = new ApiRequest($this->api->getProvider(), $this->api->getAccessToken());
+        $request = $this->api->newRequest();
         $request
             ->setUrl(Api::URL . '/gallery/folders')
             ->setParameter('username', $username)
@@ -122,7 +122,7 @@ class Gallery extends Endpoints
         bool $includeMature = null
     ): \stdClass
     {
-        $request = new ApiRequest($this->api->getProvider(), $this->api->getAccessToken());
+        $request = $this->api->newRequest();
         $request
             ->setUrl(Api::URL . '/gallery/all')
             ->setParameter('username', $username)
@@ -145,7 +145,7 @@ class Gallery extends Endpoints
         bool $includeMature = null
     ): \stdClass
     {
-        $request = new ApiRequest($this->api->getProvider(), $this->api->getAccessToken());
+        $request = $this->api->newRequest();
         $request
             ->setUrl(Api::URL . '/gallery/folders/create')
             ->setMethod(ApiRequest::POST)
@@ -167,7 +167,7 @@ class Gallery extends Endpoints
         bool $includeMature = null
     ): \stdClass
     {
-        $request = new ApiRequest($this->api->getProvider(), $this->api->getAccessToken());
+        $request = $this->api->newRequest();
         $request
             ->setUrl(Api::URL . '/gallery/folders/remove/' . $folderId)
             ->setParameter('mature_content', $includeMature)

@@ -45,7 +45,7 @@ class Deviation extends Endpoints
      */
     public function getDeviation(string $deviationId): \stdClass
     {
-        $request = new ApiRequest($this->api->getProvider(), $this->api->getAccessToken());
+        $request = $this->api->newRequest();
         $request
             ->setUrl(Api::URL . '/deviation/' . $deviationId)
         ;
@@ -65,7 +65,7 @@ class Deviation extends Endpoints
      */
     public function getContent(string $deviationId, bool $includeMature = null): \stdClass
     {
-        $request = new ApiRequest($this->api->getProvider(), $this->api->getAccessToken());
+        $request = $this->api->newRequest();
         $request
             ->setUrl(Api::URL . '/deviation/content')
             ->setParameter('deviationid', $deviationId)
@@ -83,7 +83,7 @@ class Deviation extends Endpoints
      */
     public function getDownloadInfo(string $deviationId, bool $includeMature = null): \stdClass
     {
-        $request = new ApiRequest($this->api->getProvider(), $this->api->getAccessToken());
+        $request = $this->api->newRequest();
         $request
             ->setUrl(Api::URL . '/deviation/download/' . $deviationId)
             ->setParameter('mature_content', $includeMature)
@@ -110,7 +110,7 @@ class Deviation extends Endpoints
         int $limit = 10,
         bool $includeMature = null): \stdClass
     {
-        $request = new ApiRequest($this->api->getProvider(), $this->api->getAccessToken());
+        $request = $this->api->newRequest();
         $request
             ->setUrl(Api::URL . '/deviation/embeddedcontent')
             ->setParameter('deviationid', $deviationId)
@@ -139,7 +139,7 @@ class Deviation extends Endpoints
         int $limit = 10,
         bool $includeMature = null): \stdClass
     {
-        $request = new ApiRequest($this->api->getProvider(), $this->api->getAccessToken());
+        $request = $this->api->newRequest();
         $request
             ->setUrl(Api::URL . '/deviation/whofaved')
             ->setParameter('deviationid', $deviationId)
@@ -172,7 +172,7 @@ class Deviation extends Endpoints
         bool $includeCollection = null,
         bool $includeMature = null): \stdClass
     {
-        $request = new ApiRequest($this->api->getProvider(), $this->api->getAccessToken());
+        $request = $this->api->newRequest();
         $request
             ->setUrl(Api::URL . '/deviation/metadata')
             ->setParameter('deviationids', $deviationIds)

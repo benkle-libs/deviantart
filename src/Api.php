@@ -67,6 +67,9 @@ class Api
     /** @var  Deviation */
     private $deviation;
 
+    /** @var  ApiRequest */
+    private $requestPrototype;
+
     /**
      * Api constructor.
      *
@@ -78,28 +81,20 @@ class Api
         $this->provider = $provider;
         $this->accessToken = $accessToken;
 
+        $this->requestPrototype = new ApiRequest($provider, $accessToken);
+
         $this->gallery = new Gallery($this);
         $this->deviation = new Deviation($this);
     }
 
     /**
-     * Get the OAuth2 provider.
+     * Create a new request.
      *
-     * @return AbstractProvider
+     * @return ApiRequest
      */
-    public function getProvider(): AbstractProvider
+    public function newRequest(): ApiRequest
     {
-        return $this->provider;
-    }
-
-    /**
-     * Get the access token.
-     *
-     * @return AccessToken
-     */
-    public function getAccessToken(): AccessToken
-    {
-        return $this->accessToken;
+        return clone $this->requestPrototype;
     }
 
     /**
