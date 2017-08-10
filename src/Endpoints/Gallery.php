@@ -98,7 +98,7 @@ class Gallery extends Endpoints
             ->setUrl(Api::URL . '/gallery/folders')
             ->setParameter('username', $username)
             ->setParameter('calculate_size', $calculateSize)
-            ->setParameter(' ext_preload', $preload)
+            ->setParameter('ext_preload', $preload)
             ->setParameter('offset', $offset)
             ->setParameter('limit', $limit)
             ->setParameter('mature_content', $includeMature)
