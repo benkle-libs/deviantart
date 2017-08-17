@@ -28,6 +28,7 @@
 namespace Benkle\Deviantart;
 
 
+use Benkle\Deviantart\Endpoints\Browse;
 use Benkle\Deviantart\Endpoints\Deviation;
 use Benkle\Deviantart\Endpoints\Feed;
 use Benkle\Deviantart\Endpoints\Gallery;
@@ -81,6 +82,9 @@ class Api
     /** @var  Feed */
     private $feed;
 
+    /** @var  Browse */
+    private $browse;
+
     /** @var  ApiRequest */
     private $requestPrototype;
 
@@ -102,6 +106,7 @@ class Api
         $this->gallery = new Gallery($this);
         $this->deviation = new Deviation($this);
         $this->feed = new Feed($this);
+        $this->browse = new Browse($this);
     }
 
     private function refreshRequestPrototype()
@@ -167,6 +172,16 @@ class Api
     public function feed(): Feed
     {
         return $this->feed;
+    }
+
+    /**
+     * Get the browse endpoints.
+     *
+     * @return Browse
+     */
+    public function browse(): Browse
+    {
+        return $this->browse;
     }
 
     /**
