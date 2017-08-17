@@ -30,7 +30,6 @@ namespace Benkle\Deviantart\Endpoints;
 
 use Benkle\Deviantart\Api;
 use Benkle\Deviantart\ApiRequest;
-use Benkle\Deviantart\Folder;
 
 /**
  * Class Gallery
@@ -52,7 +51,7 @@ class Gallery extends Endpoints
     public function getFolder(
         string $folderId = null,
         string $username = null,
-        string $mode = Folder::MODE_POPULAR,
+        string $mode = Api::FOLDER_MODE_POPULAR,
         int $offset = 0,
         int $limit = 10,
         bool $includeMature = null

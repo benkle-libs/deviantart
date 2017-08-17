@@ -56,6 +56,16 @@ class Api
     const SCOPE_STASH        = 'stash';
     const SCOPE_PUBLISH      = 'publish';
 
+    const FOLDER_MODE_POPULAR = 'popular';
+    const FOLDER_MODE_NEWEST  = 'newest';
+
+    const TIMERANGE_8_HR     = '8hr';
+    const TIMERANGE_24_HR    = '24hr';
+    const TIMERANGE_3_DAYS   = '3days';
+    const TIMERANGE_1_WEEK   = '1week';
+    const TIMERANGE_1_MONTH  = '1month';
+    const TIMERANGE_ALL_TIME = 'alltime';
+
     /** @var  AbstractProvider */
     private $provider;
 
