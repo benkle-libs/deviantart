@@ -90,8 +90,8 @@ class GalleryTest extends \PHPUnit_Framework_TestCase
         $this->expectUrl($requestMock, $url);
         $this->expectParameters($requestMock, $parameters);
 
-        $deviation = new Gallery($apiMock);
-        $this->assertEquals(new \stdClass(), $deviation->deleteFolder('AAA', true));
+        $gallery = new Gallery($apiMock);
+        $this->assertEquals(new \stdClass(), $gallery->deleteFolder('AAA', true));
     }
 
     public function testCreateFolder()
@@ -108,8 +108,8 @@ class GalleryTest extends \PHPUnit_Framework_TestCase
         $this->expectUrl($requestMock, $url);
         $this->expectParameters($requestMock, $parameters);
 
-        $deviation = new Gallery($apiMock);
-        $this->assertEquals(new \stdClass(), $deviation->createFolder('AAA', true));
+        $gallery = new Gallery($apiMock);
+        $this->assertEquals(new \stdClass(), $gallery->createFolder('AAA', true));
     }
 
     public function testGetAll()
@@ -128,8 +128,8 @@ class GalleryTest extends \PHPUnit_Framework_TestCase
         $this->expectUrl($requestMock, $url);
         $this->expectParameters($requestMock, $parameters);
 
-        $deviation = new Gallery($apiMock);
-        $this->assertEquals(new \stdClass(), $deviation->getAll('AAA', 10, 20, true));
+        $gallery = new Gallery($apiMock);
+        $this->assertEquals(new \stdClass(), $gallery->getAll('AAA', 10, 20, true));
     }
 
     public function testGetFolder()
@@ -149,8 +149,8 @@ class GalleryTest extends \PHPUnit_Framework_TestCase
         $this->expectUrl($requestMock, $url);
         $this->expectParameters($requestMock, $parameters);
 
-        $deviation = new Gallery($apiMock);
-        $this->assertEquals(new \stdClass(), $deviation->getFolder('AAA', 'BBB', 'CCC', 10, 20, true));
+        $gallery = new Gallery($apiMock);
+        $this->assertEquals(new \stdClass(), $gallery->getFolder('AAA', 'BBB', 'CCC', 10, 20, true));
     }
 
     public function testGetFolders()
@@ -171,7 +171,7 @@ class GalleryTest extends \PHPUnit_Framework_TestCase
         $this->expectUrl($requestMock, $url);
         $this->expectParameters($requestMock, $parameters);
 
-        $deviation = new Gallery($apiMock);
-        $this->assertEquals(new \stdClass(), $deviation->getFolders('AAA', true, false, 10, 20, true));
+        $gallery = new Gallery($apiMock);
+        $this->assertEquals(new \stdClass(), $gallery->getFolders('AAA', true, false, 10, 20, true));
     }
 }

@@ -91,8 +91,8 @@ class FeedTest extends \PHPUnit_Framework_TestCase
         $this->expectUrl($requestMock, $url);
         $this->expectParameters($requestMock, $parameters);
 
-        $deviation = new Feed($apiMock);
-        $this->assertEquals(new \stdClass(), $deviation->getNotifications('AAA', true));
+        $feed = new Feed($apiMock);
+        $this->assertEquals(new \stdClass(), $feed->getNotifications('AAA', true));
     }
 
     public function testGetHome()
@@ -109,8 +109,8 @@ class FeedTest extends \PHPUnit_Framework_TestCase
         $this->expectUrl($requestMock, $url);
         $this->expectParameters($requestMock, $parameters);
 
-        $deviation = new Feed($apiMock);
-        $this->assertEquals(new \stdClass(), $deviation->getHome('AAA', true));
+        $feed = new Feed($apiMock);
+        $this->assertEquals(new \stdClass(), $feed->getHome('AAA', true));
     }
 
     public function testGetBucket()
@@ -128,8 +128,8 @@ class FeedTest extends \PHPUnit_Framework_TestCase
         $this->expectUrl($requestMock, $url);
         $this->expectParameters($requestMock, $parameters);
 
-        $deviation = new Feed($apiMock);
-        $this->assertEquals(new \stdClass(), $deviation->getBucket('AAA', 10, 20, true));
+        $feed = new Feed($apiMock);
+        $this->assertEquals(new \stdClass(), $feed->getBucket('AAA', 10, 20, true));
     }
 
     public function testGetProfile()
@@ -146,8 +146,8 @@ class FeedTest extends \PHPUnit_Framework_TestCase
         $this->expectUrl($requestMock, $url);
         $this->expectParameters($requestMock, $parameters);
 
-        $deviation = new Feed($apiMock);
-        $this->assertEquals(new \stdClass(), $deviation->getProfile('AAA', true));
+        $feed = new Feed($apiMock);
+        $this->assertEquals(new \stdClass(), $feed->getProfile('AAA', true));
     }
 
     public function testGetSettings()
@@ -163,8 +163,8 @@ class FeedTest extends \PHPUnit_Framework_TestCase
         $this->expectUrl($requestMock, $url);
         $this->expectParameters($requestMock, $parameters);
 
-        $deviation = new Feed($apiMock);
-        $this->assertEquals(new \stdClass(), $deviation->getSettings(true));
+        $feed = new Feed($apiMock);
+        $this->assertEquals(new \stdClass(), $feed->getSettings(true));
     }
 
     public function testUpdateSettings()
@@ -181,7 +181,7 @@ class FeedTest extends \PHPUnit_Framework_TestCase
         $this->expectUrl($requestMock, $url);
         $this->expectParameters($requestMock, $parameters);
 
-        $deviation = new Feed($apiMock);
-        $this->assertEquals(new \stdClass(), $deviation->updateSettings(['foo' => 'bar'], true));
+        $feed = new Feed($apiMock);
+        $this->assertEquals(new \stdClass(), $feed->updateSettings(['foo' => 'bar'], true));
     }
 }
