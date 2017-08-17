@@ -32,6 +32,7 @@ use Benkle\Deviantart\Endpoints\Browse;
 use Benkle\Deviantart\Endpoints\Deviation;
 use Benkle\Deviantart\Endpoints\Feed;
 use Benkle\Deviantart\Endpoints\Gallery;
+use Benkle\Deviantart\Endpoints\Utils;
 use Benkle\Deviantart\Exceptions\UnauthorizedException;
 use League\OAuth2\Client\Provider\AbstractProvider;
 use League\OAuth2\Client\Token\AccessToken;
@@ -85,6 +86,9 @@ class Api
     /** @var  Browse */
     private $browse;
 
+    /** @var  Utils */
+    private $utils;
+
     /** @var  ApiRequest */
     private $requestPrototype;
 
@@ -107,6 +111,7 @@ class Api
         $this->deviation = new Deviation($this);
         $this->feed = new Feed($this);
         $this->browse = new Browse($this);
+        $this->utils = new Utils($this);
     }
 
     private function refreshRequestPrototype()
@@ -182,6 +187,16 @@ class Api
     public function browse(): Browse
     {
         return $this->browse;
+    }
+
+    /**
+     * Get the utils endpoints.
+     *
+     * @return Utils
+     */
+    public function utils(): Utils
+    {
+        return $this->utils;
     }
 
     /**
