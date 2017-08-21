@@ -29,6 +29,7 @@ namespace Benkle\Deviantart;
 
 
 use Benkle\Deviantart\Endpoints\Browse;
+use Benkle\Deviantart\Endpoints\Collections;
 use Benkle\Deviantart\Endpoints\Deviation;
 use Benkle\Deviantart\Endpoints\Feed;
 use Benkle\Deviantart\Endpoints\Gallery;
@@ -89,6 +90,9 @@ class Api
     /** @var  Utils */
     private $utils;
 
+    /** @var  $collections */
+    private $collections;
+
     /** @var  ApiRequest */
     private $requestPrototype;
 
@@ -112,6 +116,7 @@ class Api
         $this->feed = new Feed($this);
         $this->browse = new Browse($this);
         $this->utils = new Utils($this);
+        $this->collections = new Collections($this);
     }
 
     private function refreshRequestPrototype()
@@ -197,6 +202,16 @@ class Api
     public function utils(): Utils
     {
         return $this->utils;
+    }
+
+    /**
+     * Get the collections endpoints.
+     *
+     * @return Collections
+     */
+    public function collections(): Collections
+    {
+        return $this->collections;
     }
 
     /**
