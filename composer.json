@@ -1,6 +1,6 @@
 {
   "name": "benkle/deviantart",
-  "description": "A small library to access content from deviantart",
+  "description": "Access to DeviantARTs oAuth2 API",
   "minimum-stability": "dev",
   "license": "MIT",
   "authors": [
@@ -10,7 +10,8 @@
     }
   ],
   "require": {
-    "seinopsys/oauth2-deviantart": "~1.0"
+    "seinopsys/oauth2-deviantart": "~1.0",
+    "php": "^7.0"
   },
   "require-dev": {
     "phpunit/phpunit": "^5.3"
