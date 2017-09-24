@@ -30,9 +30,11 @@ namespace Benkle\Deviantart;
 
 use Benkle\Deviantart\Endpoints\Browse;
 use Benkle\Deviantart\Endpoints\Collections;
+use Benkle\Deviantart\Endpoints\Comments;
 use Benkle\Deviantart\Endpoints\Deviation;
 use Benkle\Deviantart\Endpoints\Feed;
 use Benkle\Deviantart\Endpoints\Gallery;
+use Benkle\Deviantart\Endpoints\User;
 use Benkle\Deviantart\Endpoints\Utils;
 use Benkle\Deviantart\Exceptions\UnauthorizedException;
 use League\OAuth2\Client\Provider\AbstractProvider;
@@ -90,8 +92,11 @@ class Api
     /** @var  Utils */
     private $utils;
 
-    /** @var  $collections */
+    /** @var  Collections */
     private $collections;
+
+    /** @var  Comments */
+    private $comments;
 
     /** @var  ApiRequest */
     private $requestPrototype;
@@ -117,6 +122,7 @@ class Api
         $this->browse = new Browse($this);
         $this->utils = new Utils($this);
         $this->collections = new Collections($this);
+        $this->comments = new Comments($this);
     }
 
     private function refreshRequestPrototype()
@@ -212,6 +218,15 @@ class Api
     public function collections(): Collections
     {
         return $this->collections;
+    }
+
+    /**
+     * Get the comments endpoints.
+     * @return Comments
+     */
+    public function comments(): Comments
+    {
+        return $this->comments;
     }
 
     /**
