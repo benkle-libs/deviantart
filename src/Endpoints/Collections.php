@@ -38,16 +38,16 @@ class Collections extends Endpoints
      *
      * @param string $folderId
      * @param string|null $username
-     * @param int|null $offset
-     * @param int|null $limit
+     * @param int $offset
+     * @param int $limit
      * @param bool|null $includeMature
      * @return \stdClass
      */
     public function getFolder(
         string $folderId,
         string $username = null,
-        int $offset = null,
-        int $limit = null,
+        int $offset = 0,
+        int $limit = 10,
         bool $includeMature = null
     ): \stdClass
     {
@@ -133,12 +133,12 @@ class Collections extends Endpoints
      * @param string|null $username
      * @param bool|null $calculateSize
      * @param bool|null $preload
-     * @param int|null $offset
-     * @param int|null $limit
+     * @param int $offset
+     * @param int $limit
      * @param bool|null $includeMature
      * @return \stdClass
      */
-    public function getFolders(string $username = null, bool $calculateSize = null, bool $preload = null, int $offset = null, int $limit = null, bool $includeMature = null): \stdClass
+    public function getFolders(string $username = null, bool $calculateSize = null, bool $preload = null, int $offset = 0, int $limit = 10, bool $includeMature = null): \stdClass
     {
         $request = $this->api->newRequest();
         $request

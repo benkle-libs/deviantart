@@ -78,11 +78,11 @@ class Feed extends Endpoints
      *
      * @param string $bucketId
      * @param int|null $offset
-     * @param int|null $limit
-     * @param bool|null $includeMature
+     * @param int $limit
+     * @param bool $includeMature
      * @return \stdClass
      */
-    public function getBucket(string $bucketId, int $offset = null, int $limit = null, bool $includeMature = null): \stdClass
+    public function getBucket(string $bucketId, int $offset = 0, int $limit = 10, bool $includeMature = null): \stdClass
     {
         $request = $this->api->newRequest();
         $request

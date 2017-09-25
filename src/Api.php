@@ -98,6 +98,9 @@ class Api
     /** @var  Comments */
     private $comments;
 
+    /** @var  User */
+    private $user;
+
     /** @var  ApiRequest */
     private $requestPrototype;
 
@@ -123,6 +126,7 @@ class Api
         $this->utils = new Utils($this);
         $this->collections = new Collections($this);
         $this->comments = new Comments($this);
+        $this->user = new User($this);
     }
 
     private function refreshRequestPrototype()
@@ -208,6 +212,16 @@ class Api
     public function utils(): Utils
     {
         return $this->utils;
+    }
+
+    /**
+     * Get the user endpoints.
+     *
+     * @return User
+     */
+    public function user(): User
+    {
+        return $this->user;
     }
 
     /**
