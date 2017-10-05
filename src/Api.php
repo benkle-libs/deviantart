@@ -31,9 +31,11 @@ namespace Benkle\Deviantart;
 use Benkle\Deviantart\Endpoints\Browse;
 use Benkle\Deviantart\Endpoints\Collections;
 use Benkle\Deviantart\Endpoints\Comments;
+use Benkle\Deviantart\Endpoints\Data;
 use Benkle\Deviantart\Endpoints\Deviation;
 use Benkle\Deviantart\Endpoints\Feed;
 use Benkle\Deviantart\Endpoints\Gallery;
+use Benkle\Deviantart\Endpoints\Messages;
 use Benkle\Deviantart\Endpoints\User;
 use Benkle\Deviantart\Endpoints\Utils;
 use Benkle\Deviantart\Exceptions\UnauthorizedException;
@@ -101,6 +103,12 @@ class Api
     /** @var  User */
     private $user;
 
+    /** @var  Messages */
+    private $messages;
+
+    /** @var  Data */
+    private $data;
+
     /** @var  ApiRequest */
     private $requestPrototype;
 
@@ -127,6 +135,8 @@ class Api
         $this->collections = new Collections($this);
         $this->comments = new Comments($this);
         $this->user = new User($this);
+        $this->messages = new Messages($this);
+        $this->data = new Data($this);
     }
 
     private function refreshRequestPrototype()
@@ -241,6 +251,24 @@ class Api
     public function comments(): Comments
     {
         return $this->comments;
+    }
+
+    /**
+     * Get the messages endpoints.
+     * @return Messages
+     */
+    public function messages(): Messages
+    {
+        return $this->messages;
+    }
+
+    /**
+     * Get the data endpoints.
+     * @return Messages
+     */
+    public function data(): Data
+    {
+        return $this->data;
     }
 
     /**

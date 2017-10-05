@@ -66,10 +66,7 @@ class ApiException extends \Exception
             $message .= " ({$errorBody['error_code']})";
             $this->errorCode = intval($errorBody['error_code'], 10);
         }
-        parent::__construct(
-            $message,
-            $httpCode
-        );
+        parent::__construct($message, $httpCode);
 
         if (isset($errorBody['error_details'])) {
             $this->details = $errorBody['error_details'];
