@@ -31,7 +31,7 @@ namespace Benkle\Deviantart\Endpoints;
 use Benkle\Deviantart\Api;
 use Benkle\Deviantart\ApiRequest;
 
-class DataTest extends \PHPUnit_Framework_TestCase
+class MessagesTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @return \PHPUnit_Framework_MockObject_MockObject[]
@@ -77,71 +77,129 @@ class DataTest extends \PHPUnit_Framework_TestCase
             ->willReturn($requestMock);
     }
 
-    public function testCountries()
+    public function testGetFeedback()
     {
         list($apiMock, $requestMock) = $this->createMocks();
 
-        $url = Api::URL . '/data/countries';
+        $url = Api::URL . '/messages/feedback';
 
         $parameters = [
+            ['type', 'aaa'],
+            ['folderid', 'bbb'],
+            ['stack', true],
+            ['offset', 10],
+            ['limit', 20],
             ['mature_content', true],
         ];
 
         $this->expectUrl($requestMock, $url);
         $this->expectParameters($requestMock, $parameters);
 
-        $data = new Data($apiMock);
-        $this->assertEquals(new \stdClass(), $data->getCountries(true));
+        $messages = new Messages($apiMock);
+        $this->assertEquals(new \stdClass(), $messages->getFeedback('aaa','bbb',true,10,20,true));
     }
 
-    public function testTermsOfService()
+    public function testGetFeedbackFromStack()
     {
         list($apiMock, $requestMock) = $this->createMocks();
 
-        $url = Api::URL . '/data/tos';
+        $url = Api::URL . '/messages/feedback/aaa';
 
         $parameters = [
+            ['offset', 10],
+            ['limit', 20],
             ['mature_content', true],
         ];
 
         $this->expectUrl($requestMock, $url);
         $this->expectParameters($requestMock, $parameters);
 
-        $data = new Data($apiMock);
-        $this->assertEquals(new \stdClass(), $data->getTermsOfService(true));
+        $messages = new Messages($apiMock);
+        $this->assertEquals(new \stdClass(), $messages->getFeedbackFromStack('aaa',10,20,true));
     }
 
-    public function testPrivacyPolicy()
+    public function testGetMentions()
     {
         list($apiMock, $requestMock) = $this->createMocks();
 
-        $url = Api::URL . '/data/privacy';
+        $url = Api::URL . '/messages/mentions';
 
         $parameters = [
+            ['folderid', 'aaa'],
+            ['stack', true],
+            ['offset', 10],
+            ['limit', 20],
             ['mature_content', true],
         ];
 
         $this->expectUrl($requestMock, $url);
         $this->expectParameters($requestMock, $parameters);
 
-        $data = new Data($apiMock);
-        $this->assertEquals(new \stdClass(), $data->getPrivacyPolicy(true));
+        $messages = new Messages($apiMock);
+        $this->assertEquals(new \stdClass(), $messages->getMentions('aaa',true,10,20,true));
     }
 
-    public function testSubmissionPolicy()
+    public function testGetMentionsFromStack()
     {
         list($apiMock, $requestMock) = $this->createMocks();
 
-        $url = Api::URL . '/data/submission';
+        $url = Api::URL . '/messages/mentions/aaa';
 
         $parameters = [
+            ['offset', 10],
+            ['limit', 20],
             ['mature_content', true],
         ];
 
         $this->expectUrl($requestMock, $url);
         $this->expectParameters($requestMock, $parameters);
 
-        $data = new Data($apiMock);
-        $this->assertEquals(new \stdClass(), $data->getSubmissionPolicy(true));
+        $messages = new Messages($apiMock);
+        $this->assertEquals(new \stdClass(), $messages->getMentionsFromStack('aaa',10,20,true));
+    }
+
+    public function testGetAll()
+    {
+        list($apiMock, $requestMock) = $this->createMocks();
+
+        $url = Api::URL . '/messages/feed';
+
+        $parameters = [
+            ['folderid', 'aaa'],
+            ['cursor', 'bbb'],
+            ['stack', false],
+            ['mature_content', true],
+        ];
+
+        $this->expectUrl($requestMock, $url);
+        $this->expectParameters($requestMock, $parameters);
+
+        $messages = new Messages($apiMock);
+        $this->assertEquals(new \stdClass(), $messages->getAll('aaa','bbb',false,true));
+    }
+
+    public function testDelete()
+    {
+        list($apiMock, $requestMock) = $this->createMocks();
+
+        $url = Api::URL . '/messages/delete';
+
+        $parameters = [
+            ['folderid', 'aaa'],
+            ['messageid', 'bbb'],
+            ['stackid', 'ccc'],
+            ['mature_content', true],
+        ];
+
+        $requestMock
+            ->expects($this->once())
+            ->method('setMethod')
+            ->with(ApiRequest::POST)
+            ->willReturn($requestMock);
+        $this->expectUrl($requestMock, $url);
+        $this->expectParameters($requestMock, $parameters);
+
+        $messages = new Messages($apiMock);
+        $this->assertEquals(new \stdClass(), $messages->delete('aaa','bbb','ccc',true));
     }
 }
