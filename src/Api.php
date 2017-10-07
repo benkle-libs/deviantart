@@ -36,6 +36,7 @@ use Benkle\Deviantart\Endpoints\Deviation;
 use Benkle\Deviantart\Endpoints\Feed;
 use Benkle\Deviantart\Endpoints\Gallery;
 use Benkle\Deviantart\Endpoints\Messages;
+use Benkle\Deviantart\Endpoints\Notes;
 use Benkle\Deviantart\Endpoints\User;
 use Benkle\Deviantart\Endpoints\Utils;
 use Benkle\Deviantart\Exceptions\UnauthorizedException;
@@ -109,6 +110,9 @@ class Api
     /** @var  Data */
     private $data;
 
+    /** @var  Notes */
+    private $notes;
+
     /** @var  ApiRequest */
     private $requestPrototype;
 
@@ -137,6 +141,7 @@ class Api
         $this->user = new User($this);
         $this->messages = new Messages($this);
         $this->data = new Data($this);
+        $this->notes = new Notes($this);
     }
 
     private function refreshRequestPrototype()
@@ -232,6 +237,16 @@ class Api
     public function user(): User
     {
         return $this->user;
+    }
+
+    /**
+     * Get the notes endpoints.
+     *
+     * @return Notes
+     */
+    public function notes(): Notes
+    {
+        return $this->notes;
     }
 
     /**
