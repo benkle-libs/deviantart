@@ -27,12 +27,10 @@
 
 namespace Benkle\Deviantart\Endpoints;
 
-
 use Benkle\Deviantart\Api;
 
 class EndpointsTest extends \PHPUnit_Framework_TestCase
 {
-
     public function testApi()
     {
         $apiMock = $this->createMock(Api::class);

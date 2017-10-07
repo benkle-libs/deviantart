@@ -27,55 +27,14 @@
 
 namespace Benkle\Deviantart\Endpoints;
 
+require_once __DIR__ . '/EndpointHelperTrait.php';
 
 use Benkle\Deviantart\Api;
 use Benkle\Deviantart\ApiRequest;
 
 class CommentsTest extends \PHPUnit_Framework_TestCase
 {
-    /**
-     * @return \PHPUnit_Framework_MockObject_MockObject[]
-     */
-    private function createMocks(): array
-    {
-        $requestMock = $this->createMock(ApiRequest::class);
-        $requestMock
-            ->expects($this->once())
-            ->method('send')
-            ->willReturn(new \stdClass());
-        $apiMock = $this->createMock(Api::class);
-        $apiMock
-            ->expects($this->once())
-            ->method('newRequest')
-            ->willReturn($requestMock);
-        return [$apiMock, $requestMock];
-    }
-
-    /**
-     * @param $requestMock
-     * @param $parameters
-     */
-    private function expectParameters($requestMock, $parameters)
-    {
-        $requestMock
-            ->expects($this->any())
-            ->method('setParameter')
-            ->withConsecutive(...$parameters)
-            ->willReturn($requestMock);
-    }
-
-    /**
-     * @param $requestMock
-     * @param $url
-     */
-    private function expectUrl($requestMock, $url)
-    {
-        $requestMock
-            ->expects($this->once())
-            ->method('setUrl')
-            ->with($url)
-            ->willReturn($requestMock);
-    }
+    use EndpointHelperTrait;
 
     public function testForDeviation()
     {
@@ -173,11 +132,7 @@ class CommentsTest extends \PHPUnit_Framework_TestCase
         ];
 
         $this->expectUrl($requestMock, $url);
-        $requestMock
-            ->expects($this->once())
-            ->method('setMethod')
-            ->with(ApiRequest::POST)
-            ->willReturn($requestMock);
+        $this->expectPost($requestMock);
         $this->expectParameters($requestMock, $parameters);
 
         $comments = new Comments($apiMock);
@@ -197,11 +152,7 @@ class CommentsTest extends \PHPUnit_Framework_TestCase
         ];
 
         $this->expectUrl($requestMock, $url);
-        $requestMock
-            ->expects($this->once())
-            ->method('setMethod')
-            ->with(ApiRequest::POST)
-            ->willReturn($requestMock);
+        $this->expectPost($requestMock);
         $this->expectParameters($requestMock, $parameters);
 
         $comments = new Comments($apiMock);
@@ -221,11 +172,7 @@ class CommentsTest extends \PHPUnit_Framework_TestCase
         ];
 
         $this->expectUrl($requestMock, $url);
-        $requestMock
-            ->expects($this->once())
-            ->method('setMethod')
-            ->with(ApiRequest::POST)
-            ->willReturn($requestMock);
+        $this->expectPost($requestMock);
         $this->expectParameters($requestMock, $parameters);
 
         $comments = new Comments($apiMock);
