@@ -37,6 +37,7 @@ use Benkle\Deviantart\Endpoints\Feed;
 use Benkle\Deviantart\Endpoints\Gallery;
 use Benkle\Deviantart\Endpoints\Messages;
 use Benkle\Deviantart\Endpoints\Notes;
+use Benkle\Deviantart\Endpoints\Stash;
 use Benkle\Deviantart\Endpoints\User;
 use Benkle\Deviantart\Endpoints\Utils;
 use Benkle\Deviantart\Exceptions\UnauthorizedException;
@@ -113,6 +114,9 @@ class Api
     /** @var  Notes */
     private $notes;
 
+    /** @var  Stash */
+    private $stash;
+
     /** @var  ApiRequest */
     private $requestPrototype;
 
@@ -142,6 +146,7 @@ class Api
         $this->messages = new Messages($this);
         $this->data = new Data($this);
         $this->notes = new Notes($this);
+        $this->stash = new Stash($this);
     }
 
     private function refreshRequestPrototype()
@@ -279,11 +284,20 @@ class Api
 
     /**
      * Get the data endpoints.
-     * @return Messages
+     * @return Data
      */
     public function data(): Data
     {
         return $this->data;
+    }
+
+    /**
+     * Get the stash endpoints.
+     * @return Stash
+     */
+    public function stash(): Stash
+    {
+        return $this->stash;
     }
 
     /**
