@@ -84,7 +84,6 @@ class Stash extends Endpoints
         bool $includeMature = null
     ): ApiRequest
     {
-        throw new \Exception('Not implemented yet');
         $url = Api::URL . '/stash/submit';
         $request = $this->api->newRequest();
         $request
