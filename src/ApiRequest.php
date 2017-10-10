@@ -235,6 +235,7 @@ class ApiRequest
             if ($this->getMethod() == self::GET) {
                 $url .= '?' . http_build_query($parameters);
             } elseif ($this->getParts()) {
+                $this->setMethod(ApiRequest::POST);
                 $multipart = [];
                 foreach ($parameters as $parameter => $value) {
                     $multipart[] = ApiRequestPart::from($parameter, $value)->serialize();
@@ -254,12 +255,7 @@ class ApiRequest
                 ];
             }
         }
-        $request = $this->getProvider()->getAuthenticatedRequest(
-            $this->getMethod(),
-            $url,
-            $token,
-            $options
-        );
+        $request = $this->getProvider()->getAuthenticatedRequest($this->getMethod(), $url, $token, $options);
         try {
             $response = $this->getProvider()->getHttpClient()->send($request);
         } catch (ClientException $e) {

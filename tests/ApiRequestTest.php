@@ -78,6 +78,21 @@ class ApiRequestTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(['bar' => ['foo', 'foo']], $request->getParameters());
     }
 
+    public function testPart()
+    {
+        $providerMock = $this->createMock(AbstractProvider::class);
+        $accessTokenMock = $this->createMock(AccessToken::class);
+        $partMock = $this->createMock(ApiRequestPart::class);
+
+        $request = new ApiRequest($providerMock, $accessTokenMock);
+
+        $this->assertEquals([], $request->getParts());
+        $this->assertEquals($request, $request->setParts([$partMock]));
+        $this->assertEquals([$partMock], $request->getParts());
+        $this->assertEquals($request, $request->addPart($partMock));
+        $this->assertEquals([$partMock, $partMock], $request->getParts());
+    }
+
     public function testUrl()
     {
         $providerMock = $this->createMock(AbstractProvider::class);
@@ -135,6 +150,82 @@ class ApiRequestTest extends \PHPUnit_Framework_TestCase
             ->setMethod(ApiRequest::GET)
             ->setUrl('http://example.com')
             ->setParameter('foo', 'bar')
+            ->send()
+        ;
+        $this->assertInstanceOf(\stdClass::class, $result);
+        $this->assertEquals('bar', $result->foo);
+    }
+
+    public function testMultipart()
+    {
+        $partMock = $this->createMock(ApiRequestPart::class);
+        $partMock
+            ->expects($this->once())
+            ->method('serialize')
+            ->willReturn([
+                'name' => 'aaa',
+                'contents' => 'bbb'
+                         ]);
+        $bodyMock = $this->createMock(StreamInterface::class);
+        $bodyMock
+            ->expects($this->once())
+            ->method('getContents')
+            ->willReturn('{"foo": "bar"}');
+        $responseMock = $this->createMock(Response::class);
+        $responseMock
+            ->expects($this->once())
+            ->method('getBody')
+            ->willReturn($bodyMock);
+        $requestMock = $this->createMock(Request::class);
+        $clientMock = $this->createMock(Client::class);
+        $accessTokenMock = $this->createMock(AccessToken::class);
+        $accessTokenMock
+            ->expects($this->once())
+            ->method('getToken')
+            ->willReturn('TOKEN');
+        $providerMock = $this->createMock(AbstractProvider::class);
+        $providerMock
+            ->expects($this->once())
+            ->method('getHttpClient')
+            ->willReturn($clientMock);
+        $clientMock
+            ->expects($this->once())
+            ->method('send')
+            ->with($requestMock)
+            ->willReturn($responseMock);
+        $providerMock
+            ->expects($this->once())
+            ->method('getAuthenticatedRequest')
+            ->with(
+                ApiRequest::POST,
+                'http://example.com',
+                'TOKEN',
+                $this->logicalAnd(
+                    $this->arrayHasKey('body'),
+                    $this->arrayHasKey('headers'),
+                    $this->callback(function($options) {
+                        $content = array_map('trim', explode("\n", $options['body']->getContents()));
+                        $result = $this->contains('Content-Disposition: form-data; name="foo"')->evaluate($content, null, true);
+                        $result = $result && $this->contains('bar')->evaluate($content, null, true);
+                        $result = $result && $this->contains('Content-Disposition: form-data; name="access_token"')->evaluate($content, null, true);
+                        $result = $result && $this->contains('TOKEN')->evaluate($content, null, true);
+                        $result = $result && $this->contains('Content-Disposition: form-data; name="aaa"')->evaluate($content, null, true);
+                        $result = $result && $this->contains('bbb')->evaluate($content, null, true);
+                        $result = $result && $options['body'] instanceof StreamInterface;
+                        $result = $result && strpos($options['headers']['Content-Type'], 'multipart/form-data; boundary=') !== false;
+                        return $result;
+                    })
+                )
+            )
+            ->willReturn($requestMock);
+
+        $request = new ApiRequest($providerMock, $accessTokenMock);
+
+        $result = $request
+            ->setMethod(ApiRequest::POST)
+            ->setUrl('http://example.com')
+            ->setParameter('foo', 'bar')
+            ->addPart($partMock)
             ->send()
         ;
         $this->assertInstanceOf(\stdClass::class, $result);
