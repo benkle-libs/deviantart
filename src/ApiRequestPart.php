@@ -26,6 +26,7 @@
 
 
 namespace Benkle\Deviantart;
+
 use function GuzzleHttp\Psr7\stream_for;
 use Psr\Http\Message\StreamInterface;
 
@@ -132,9 +133,13 @@ class ApiRequestPart
     public function serialize(): array
     {
         $result = [
-            'name' => $this->getName(),
+            'name'     => $this->getName(),
             'contents' => $this->getStream(),
         ];
+
+        if ($this->filename) {
+            $result['filename'] = $this->filename;
+        }
 
         return $result;
     }
