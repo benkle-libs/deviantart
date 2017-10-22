@@ -175,6 +175,16 @@ class Api
     }
 
     /**
+     * Check wether we actually have an access token.
+     *
+     * @return bool
+     */
+    public function hasAccessToken(): bool
+    {
+        return isset($this->accessToken) && $this->accessToken instanceof AccessToken;
+    }
+
+    /**
      * Create a new request.
      *
      * @return ApiRequest
