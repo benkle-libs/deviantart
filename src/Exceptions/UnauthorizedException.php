@@ -33,6 +33,8 @@ namespace Benkle\Deviantart\Exceptions;
  */
 class UnauthorizedException extends \Exception
 {
+    const CODE = 0x61f146a6;
+
     /** @var  string */
     private $url;
 
@@ -43,6 +45,17 @@ class UnauthorizedException extends \Exception
     public function __construct($url)
     {
         $this->url = $url;
+        parent::__construct("Unauthorized access, visit {$url}", self::CODE);
+    }
+
+    /**
+     * Get the url.
+     *
+     * @return string
+     */
+    public function getUrl(): string
+    {
+        return $this->url;
     }
 
     /**
